@@ -8,13 +8,9 @@ const router = require('./app/routers/index');
 
 const port = 3001;
 
-// app.use(express.json());
-// app.use(cors());
-// app.use('/', router);
-
-app.get('/', function (req, res) {
-    res.send('Hello World')
-})
+app.use(express.json());
+app.use(cors());
+app.use('/', router);
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:3001`);
