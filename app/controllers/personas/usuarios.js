@@ -41,4 +41,4 @@ const getUsuario = async (req, res) => {
     }
 };
 
-module.exports = { getUsurio, createPersona };
+module.exports = { getUsuario, createPersona };

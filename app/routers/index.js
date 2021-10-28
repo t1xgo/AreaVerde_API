@@ -23,6 +23,5 @@ router
     //Usuarios
     .get("/personaGet/:id", _usuariosController.getUsurio);
 
-    //Reportes
 
 module.exports = router;
