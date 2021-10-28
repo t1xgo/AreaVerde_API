@@ -8,6 +8,10 @@ const _reportesController = require('../controllers/reportes/reportes');
 
 router
     .get('/getrecolectores', _recolectoresController.getRecolectores)
-    .get('/getadministradores', _administradoresController.getAdministradores);
+    .get('/getadministradores', _administradoresController.getAdministradores)
+
+    //Reports
+    .post('/createReport', _reportesController.createReport)
+    .get('/getReport/:id', _reportesController.getReport);
 
 module.exports = router;
