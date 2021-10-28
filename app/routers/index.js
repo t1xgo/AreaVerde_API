@@ -7,6 +7,8 @@ const _usuariosController = require('../controllers/personas/usuarios');
 const _reportesController = require('../controllers/reportes/reportes');
 
 router
+    .put('/putrecolectores', _recolectoresController.updateRecolector)
+    .post('/postrecolectores', _recolectoresController.createRecolector)
     .get('/getrecolectores', _recolectoresController.getRecolectores)
     .get('/getadministradores', _administradoresController.getAdministradores);
 
