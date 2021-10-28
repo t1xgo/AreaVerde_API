@@ -13,9 +13,10 @@ router
     .get('/getrecolectores', _recolectoresController.getRecolectores)
 
     //Administradores
-    .get('/getadministradores', _administradoresController.getAdministradores);
+    .get('/getadministradores', _administradoresController.getAdministradores)
 
     //Usuarios
+    .get("/personaGet/:id", _usuariosController.getUsurio);
 
     //Reportes
 
