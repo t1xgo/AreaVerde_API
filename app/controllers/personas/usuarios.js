@@ -1,3 +1,4 @@
+
 const PostgresService = require('../../services/postgres.service');
 const _pg = new PostgresService();
 
@@ -41,4 +42,4 @@ const getUsuario = async (req, res) => {
     }
 };
 
-module.exports = { getUsuario, createPersona };
+module.exports = {getUsuario, createPersona };

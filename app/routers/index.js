@@ -21,7 +21,7 @@ router
     .get('/getadministradores', _administradoresController.getAdministradores)
 
     //Usuarios
-    .get("/personaGet/:id", _usuariosController.getUsurio);
+    .get("/personaGet/:id", _usuariosController.getUsuario);
 
 
 module.exports = router;
