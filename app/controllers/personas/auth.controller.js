@@ -4,7 +4,8 @@ const _jwt = require('../../services/jwt.service')
 
 const getPersonaLogin = async (req, res) => {
     let persona = req.body;
-    let sql = `select id_personal, nombre, cedula, tipo, usuario, fechanacimiento, celular, id_categoriarecolector
+    let sql = `select nombre, cedula, tipo,
+     fechanacimiento, celular, id_categoriarecolector
     from personal where usuario = '${persona.usuario}' 
     and password = md5('${persona.password}')`;
     try {
@@ -16,10 +17,11 @@ const getPersonaLogin = async (req, res) => {
         return res.send({
             ok: logged ? true : false,
             message: logged ? 'Bienvenido' : 'Verificar informacion',
-            content: {token},
+            content: {token, tipo: logged.tipo},
         });
+        
     } catch (error) {
-        try {
+        /*try {
             let sql = `select id_usuario, nombre, cedula, correo, usuario, fechanacimiento, celular
             from usuarios where usuario = '${persona.usuario}' and password = md5('${persona.password}')`; 
             console.log(sql);
@@ -35,7 +37,9 @@ const getPersonaLogin = async (req, res) => {
         } catch (error) {
             console.log(error);
             return res.send({ ok: false, message: "Error ingresando sesion", content: error, });
-        }
+        }*/
+        console.log(error);
+        return res.send({ ok: false, message: "Error ingresando sesion", content: error, });
     }
 };
 

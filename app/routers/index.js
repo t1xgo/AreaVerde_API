@@ -1,12 +1,23 @@
 const express = require('express');
 
 const router = express.Router();
+const _authController = require('../controllers/personas/auth.controller');
 const _recolectoresController = require('../controllers/personas/recolectores');
 const _administradoresController = require('../controllers/personas/administradores');
 const _usuariosController = require('../controllers/personas/usuarios');
 const _reportesController = require('../controllers/reportes/reportes');
 
 router
+    //Login
+    .post('/login', _authController.getPersonaLogin)
+    .post('/personaCreate', _usuariosController.createPersona);
+
+    //Middleware
+    router.use([_authController.verifyTokenMiddleWare])
+
+    //Verificar Token
+    .get('/verify', _authController.verifyToken)
+
     //Recolectores
     .put('/putrecolectores', _recolectoresController.updateRecolector)
     .post('/postrecolectores', _recolectoresController.createRecolector)

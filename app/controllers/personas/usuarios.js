@@ -5,8 +5,8 @@ const _pg = new PostgresService();
 const createPersona = async (req, res) => {
     try {
         let persona = req.body;
-        let sql = `INSERT INTO public.usuarios
-        (nombre, cedula, correo, usuario, "password", fechanacimiento, celular)
+        let sql = `INSERT INTO usuarios
+        (nombre, cedula, correo, usuario, password, fechanacimiento, celular)
         values('${persona.nombre}', '${persona.cedula}', 
             md5('${persona.password}'),'${persona.fechanacimiento}', '${persona.celular}')`;
         let result = await _pg.executeSql(sql);
