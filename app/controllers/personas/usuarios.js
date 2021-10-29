@@ -10,6 +10,7 @@ const createPersona = async (req, res) => {
         values('${persona.nombre}', '${persona.cedula}', 
             md5('${persona.password}'),'${persona.fechanacimiento}', '${persona.celular}')`;
         let result = await _pg.executeSql(sql);
+        console.log(result.rows)
         return res.send({ ok: result.rowCount == 1, message: result == 1 ? "El usuario no fue creado" : "Usuario creado", content: persona, });
     } catch (error) {
         console.log(error);
