@@ -8,8 +8,10 @@ const _usuariosController = require('../controllers/personas/usuarios');
 const _reportesController = require('../controllers/reportes/reportes');
 
 router
-    //Login
+    //Login y Registro
+    .post('/personaCreate', _usuariosController.createPersona)
     .post('/login', _authController.getPersonaLogin)
+
 
     //Middleware
     router.use([_authController.verifyTokenMiddleWare])
@@ -28,10 +30,9 @@ router
     .get('/getReport/:id', _reportesController.getReport)
 
     //Administradores
-    .get('/getadministradores', _administradoresController.getAdministradores)
+    .get('/getadministradores', _administradoresController.getAdministradores);
 
     //Usuarios
-    .get("/personaGet/:id", _usuariosController.getUsuario)
-    .post('/personaCreate', _usuariosController.createPersona);
+ 
 
 module.exports = router;

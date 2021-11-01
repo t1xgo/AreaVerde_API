@@ -10,10 +10,10 @@ class PostgresService {
 
     async executeSql(sql) {
         try {
-            let result = await this.pool.query(sql);
-            return result;
+             return await this.pool.query(sql);
         } catch (error) {
         };
     };
+
 };
 module.exports = PostgresService;
