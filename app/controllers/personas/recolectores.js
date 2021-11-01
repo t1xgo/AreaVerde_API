@@ -22,7 +22,7 @@ const createRecolector = async (req, res) => {
         return res.send({ ok: result.rowCount == 1, message: result == 1 ? "El recolector no fue creado" : "Recolector creado", content: recolector, });
     } catch (error) {
         console.log(error);
-        return res.send({ ok: false, message: "Error creado el recolector", content: error, });
+        return res.send({ ok: false, message: "Error creando el recolector", content: error, });
     }
 };
 

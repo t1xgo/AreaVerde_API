@@ -2,7 +2,7 @@ const pg = require("pg");
 
 class PostgresService {
     constructor() {
-        this.connectionString = 'postgresql://postgres:Aleja-123@localhost:5432/areaVerde'
+        this.connectionString = 'postgresql://postgres:postgres@localhost:5432/areaVerde'
         this.pool = new pg.Pool(
             { connectionString: this.connectionString }
         );
@@ -10,10 +10,10 @@ class PostgresService {
 
     async executeSql(sql) {
         try {
-            let result = await this.pool.query(sql);
-            return result;
+             return await this.pool.query(sql);
         } catch (error) {
         };
     };
+
 };
 module.exports = PostgresService;
