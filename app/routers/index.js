@@ -11,7 +11,8 @@ router
     //Login y Registro
     .post('/personaCreate', _usuariosController.createPersona)
     .post('/login', _authController.getPersonaLogin)
-
+    //Creacion Report
+    .post('/createReport/:id', _reportesController.createReport)
 
     //Middleware
     router.use([_authController.verifyTokenMiddleWare])
@@ -26,7 +27,6 @@ router
     .get('/getadministradores', _administradoresController.getAdministradores)
 
     //Reports
-    .post('/createReport', _reportesController.createReport)
     .get('/getReport/:id', _reportesController.getReport)
 
     //Administradores

@@ -2,14 +2,16 @@ const PostgresService = require('../../services/postgres.service');
 const _pg = new PostgresService();
 
 const createReport = async (req, res) => {
+    let id = req.params.id_usuario;
     let report = req.body;
     let sql = `insert into reportes (descripcion, id_categoria, id_usuario, ubicacion, rutaimagen, 
             estado) values('${report.descripcion}', '${report.id_categoria}', 
-            ${report.id_usuario}, '${report.ubicacion}', '${report.rutaimagen}', '${report.estado}')`;
+            ${id}, '${report.ubicacion}', '${report.rutaimagen}', '${report.estado}')`;
 
     try {
         let result = await _pg.executeSql(sql);
         console.log(result);
+        console.log(sql);
         return res.send({
             ok: result.rowCount == 1,
             message: result == 1 ? "El reporte no fue creado" : "Reporte creado",
