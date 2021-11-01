@@ -76,6 +76,3 @@ const verifyTokenMiddleWare = (req, res, next) => {
 }
 
 module.exports = { getPersonaLogin, verifyToken, verifyTokenMiddleWare };
-
-
-
