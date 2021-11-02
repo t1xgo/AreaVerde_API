@@ -16,8 +16,9 @@ const getRecolectores = async (req, res) => {
 const createRecolector = async (req, res) => {
     try {
         let recolector = req.body;
-        let sql = `insert into personal (nombre, cedula, tipo, usuario, password, fechanacimiento, celular, id_categoriarecolector)
-        values ('${recolector.nombre}', '${recolector.cedula}', 1, '${recolector.usuario}', '${recolector.cedula}', '${recolector.fechanacimiento}', '${recolector.nombres}', ${recolector.id_categoriarecolector})`;
+        let sql = `insert into personal (nombre, cedula, tipo, usuario, password, celular, id_categoriarecolector)
+        values ('${recolector.nombre}', '${recolector.cedula}', 1, '${recolector.cedula}', 
+        md5('${recolector.cedula}'),'${recolector.celular}', ${recolector.id_categoriarecolector})`;
         let result = await _pg.executeSql(sql);
         return res.send({ ok: result.rowCount == 1, message: result == 1 ? "El recolector no fue creado" : "Recolector creado", content: recolector, });
     } catch (error) {
