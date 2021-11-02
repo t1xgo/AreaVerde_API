@@ -5,7 +5,7 @@ const _jwt = require('../../services/jwt.service');
 const getPersonaLogin = async (req, res) => {
   try {
     let user = req.body;
-    let sql = `select nombre,cedula,correo from usuarios WHERE usuario='${user.usuario}' 
+    let sql = `select id_usuario,nombre,cedula,correo from usuarios WHERE usuario='${user.usuario}' 
     AND password = '${user.password}' limit 1`;
     let result = await _pg.executeSql(sql);
     let user_logged = result.rows[0];
@@ -17,7 +17,7 @@ const getPersonaLogin = async (req, res) => {
         message: user_logged
           ? `Bienvenido ${user_logged.nombre}`
           : "Usuario no encontrado, verificar identificación y/o contraseña.",
-        content: { token, name: user_logged.nombre, rol: user_logged.id_rol },
+        content: { token, name: user_logged.nombre, rol: user_logged.tipo, id:user_logged.id_usuario },
       });
     } else {
       sql = `select nombre,cedula,tipo from personal WHERE usuario='${user.usuario}' 

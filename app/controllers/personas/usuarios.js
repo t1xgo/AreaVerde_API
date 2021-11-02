@@ -9,8 +9,7 @@ const createPersona = async (req, res) => {
         let sql = `INSERT INTO usuarios (nombre,
              cedula, correo, usuario, password, fechanacimiento,
               celular) VALUES('${persona.nombre}', '${persona.cedula}', '${persona.correo}', 
-              '${persona.usuario}', md5('${persona.password}'), '${persona.fechanacimiento}',
-               '${persona.celular}')`;
+              '${persona.usuario}', md5('${persona.password}'), '${persona.fechanacimiento}','${persona.celular}')`;
         console.log(sql)
         let result = await _pg.executeSql(sql);
         console.log(result);
