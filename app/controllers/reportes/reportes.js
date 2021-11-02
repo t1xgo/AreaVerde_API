@@ -4,9 +4,11 @@ const { createFolder, saveFile, readDirectory } = require("../../services/fs.ser
 
 const createReport = async (req, res) => {
     let report = req.body;
+    console.log(report);
     let sql = `insert into reportes (descripcion, id_categoria, id_usuario, ubicacion, rutaimagen, 
             estado) values('${report.descripcion}', '${report.id_categoria}', 
-            ${report.id_usuario}, '${report.ubicacion}', '${report.rutaimagen}', '${report.estado}')`;
+            ${report.id_usuario}, '${report.ubicacion}', 
+            './docs/${report.id_usuario}/${report.rutaimagen}', '${report.estado}')`;
 
     try {
         let result = await _pg.executeSql(sql);
@@ -45,10 +47,9 @@ const getReport = async (req, res) => {
 
 const saveFiles = async (req, res) => {
     try {
+      console.log(req.params);
       let id = req.params.id;
       console.log(id);
-      let files = req.files;
-      console.log(files);
       let image = files.imagen;
       console.log(image);
       createFolder(`./docs/${id}/`);

@@ -5,6 +5,7 @@ const _pg = new PostgresService();
 
 const createPersona = async (req, res) => {
     try {
+        
         let persona = req.body;
         let sql = `INSERT INTO usuarios (nombre,
              cedula, correo, usuario, password, fechanacimiento,

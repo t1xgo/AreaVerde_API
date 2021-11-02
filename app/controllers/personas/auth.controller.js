@@ -31,7 +31,7 @@ const getPersonaLogin = async (req, res) => {
         message: user_logged
           ? `Bienvenido recolector ${user_logged.nombre}`
           : "Usuario no encontrado, verificar identificación y/o contraseña.",
-        content: { token, name: user_logged.nombre, rol: user_logged.tipo },
+        content: { token, name: user_logged.nombre, rol: user_logged.tipo, id:user_logged.id_usuario},
       });
     }
   } catch (error) {

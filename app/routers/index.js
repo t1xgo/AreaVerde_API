@@ -14,12 +14,10 @@ router
 
     //Creacion Report
     .post('/createReport', _reportesController.createReport)
+    .post('/createReport/:id/archivos', _reportesController.saveFiles)
 
     //Creacion archivo
-
     .use("/public/static", express.static("docs"))
-
-    .post('/createReport/archivos', _reportesController.saveFiles)
 
 //Middleware
     .use([_authController.verifyTokenMiddleWare])
