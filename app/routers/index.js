@@ -11,11 +11,19 @@ router
     //Login y Registro
     .post('/personaCreate', _usuariosController.createPersona)
     .post('/login', _authController.getPersonaLogin)
+
     //Creacion Report
     .post('/createReport', _reportesController.createReport)
 
-    //Middleware
-    router.use([_authController.verifyTokenMiddleWare])
+    //Creacion archivo
+
+    .use("/public/static", express.static("docs"))
+
+    .post('/createReport/archivos', _reportesController.saveFiles)
+
+//Middleware
+    .use([_authController.verifyTokenMiddleWare])
+//Rutas
 
     //Verificar Token
     .get('/verify', _authController.verifyToken)
@@ -32,7 +40,5 @@ router
     //Administradores
     .get('/getadministradores', _administradoresController.getAdministradores);
 
-    //Usuarios
- 
 
 module.exports = router;
