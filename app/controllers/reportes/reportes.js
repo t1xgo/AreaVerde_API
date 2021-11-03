@@ -2,6 +2,7 @@ const PostgresService = require('../../services/postgres.service');
 const _pg = new PostgresService();
 const { createFolder, saveFile, readDirectory } = require("../../services/fs.service");
 
+//Crear reporte
 const createReport = async (req, res) => {
     let report = req.body;
     console.log(report);
@@ -28,36 +29,47 @@ const createReport = async (req, res) => {
         });
     }
 };
-
-//Traer todos los reportes
+//Traer TODOS los reportes
 const getReportes = async (req, res) => {
-  let sql = `select rutaimagen,descripcion,ubicacion,estado from reportes`;
   try {
-      let result = await _pg.executeSql(sql);
-      console.log(result.rows);
-      return res.send(result.rows);
+    let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, estado from reportes`;
+    let result = await _pg.executeSql(sql);
+    let rows = result.rows;
+    return res.send({
+      ok: true,
+      message: "Reportes consultados",
+      content: rows,
+    });
   } catch (error) {
-      console.log(error);
-      return res.send({ ok: false, message: "Error consultando los usuarios", content: error, });
+    return res.send({
+      ok: false,
+      message: "Ha ocurrido un error consultando los reportes",
+      content: error,
+    });
   }
 };
 
+// Traer los reportes de un USUARIO
 const getReport = async (req, res) => {
-    let id = req.params.id;
-    let sql = `select reportes.id_reporte, reportes.descripcion, categorias.nombre as categoria, usuarios.usuario, 
-                    reportes.ubicacion, reportes.rutaimagen, reportes.estado from reportes 
-                    inner join categorias on reportes.id_categoria = categorias.id_categoria  
-                    inner join usuarios on usuarios.id_usuario = reportes.id_usuario 
-                where id_reporte = ${id} limit 1`;
     try {
-        let result = await _pg.executeSql(sql);
-        return res.send({ ok: true, message: "Reporte consultado", content: result.rows, });
+      let id = req.params.id;
+      let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, estado from reportes where id_usuario = ${id}`;
+      let result = await _pg.executeSql(sql);
+      let rows = result.rows;
+      return res.send({
+        ok: true,
+        message: "Reportes consultados del usuario",
+        content: rows[0],
+      });
     } catch (error) {
-        console.log(error);
-        return res.send({ ok: false, message: "Error consultando el reporte", content: error, });
+      return res.send({
+        ok: false,
+        message: "Ha ocurrido un error consultando los reportes del usuario",
+        content: error,
+      });
     }
 };
-
+//Guardar imagenes de reportes
 const saveFiles = async (req, res) => {
     try {
       console.log(req.params);
