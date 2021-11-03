@@ -29,6 +29,19 @@ const createReport = async (req, res) => {
     }
 };
 
+//Traer todos los reportes
+const getReportes = async (req, res) => {
+  let sql = `select rutaimagen,descripcion,ubicacion,estado from reportes`;
+  try {
+      let result = await _pg.executeSql(sql);
+      console.log(result.rows);
+      return res.send(result.rows);
+  } catch (error) {
+      console.log(error);
+      return res.send({ ok: false, message: "Error consultando los usuarios", content: error, });
+  }
+};
+
 const getReport = async (req, res) => {
     let id = req.params.id;
     let sql = `select reportes.id_reporte, reportes.descripcion, categorias.nombre as categoria, usuarios.usuario, 
@@ -68,4 +81,4 @@ const saveFiles = async (req, res) => {
     }
   };
 
-module.exports = { createReport, getReport, saveFiles };
+module.exports = { createReport,getReportes, getReport, saveFiles };

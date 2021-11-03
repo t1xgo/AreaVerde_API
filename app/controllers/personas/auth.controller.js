@@ -6,8 +6,11 @@ const getPersonaLogin = async (req, res) => {
   try {
     let user = req.body;
     let sql = `select id_usuario,nombre,cedula,correo from usuarios WHERE usuario='${user.usuario}' 
-    AND password = '${user.password}' limit 1`;
+    AND password = md5('${user.password}') limit 1`;
+    console.log(sql);
+    console.log("BODYYYY",req.body);
     let result = await _pg.executeSql(sql);
+    console.log("RESULTTTTTT",result);
     let user_logged = result.rows[0];
     console.log(user_logged);
     if (user_logged != undefined) {
