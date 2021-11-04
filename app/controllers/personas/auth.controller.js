@@ -51,7 +51,7 @@ const verifyToken = (req, res) => {
     try {
         let token = req.headers.token;
         let persona = _jwt.verify(token);
-        return res.send({
+        return res.status(200).send({
             ok: true,
             message: "Token verificado",
             content: persona
@@ -60,7 +60,7 @@ const verifyToken = (req, res) => {
         return res.send({
             ok: false,
             message: "El token no se pudo verificar",
-            content: persona
+            content: error
         });
     }
 };
@@ -73,7 +73,8 @@ const verifyTokenMiddleWare = (req, res, next) => {
     } catch (error) {
         return res.send({
             ok: false,
-            message: "El token no se pudo verificar",
+            message: "Middleware - Error verificando el token",
+            content:error,
         });
     }
 }
