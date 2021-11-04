@@ -14,6 +14,7 @@ router
 
     //Reports
     .get('/getReport/:id', _reportesController.getReport)
+    .use("/public/static", express.static("docs"))
 
     //Creacion Report
     .post('/createReport', _reportesController.createReport)
