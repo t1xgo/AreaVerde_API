@@ -26,19 +26,20 @@ router
     //Creacion archivo
     .use("/public/static", express.static("docs"))
 
-//Middleware
-    .use([_authController.verifyTokenMiddleWare])
 //Rutas
-
-    //Verificar Token
-    .get('/verify', _authController.verifyToken)
 
     //Recolectores
     .put('/putrecolectores', _recolectoresController.updateRecolector)
     .get('/getadministradores', _administradoresController.getAdministradores)
 
     //Administradores
-    .get('/getadministradores', _administradoresController.getAdministradores);
+    .get('/getadministradores', _administradoresController.getAdministradores)
+
+    //Middleware
+    .use([_authController.verifyTokenMiddleWare])
+
+    //Verificar Token
+    .get('/verify', _authController.verifyToken);
 
 
 module.exports = router;
