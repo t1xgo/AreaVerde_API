@@ -4,7 +4,6 @@ const { createFolder, saveFile, readDirectory } = require("../../services/fs.ser
 
 const createReport = async (req, res) => {
     let report = req.body;
-    console.log(report);
     let sql = `insert into reportes (descripcion, id_categoria, id_usuario, ubicacion, rutaimagen, 
             estado) values('${report.descripcion}', '${report.id_categoria}', 
             ${report.id_usuario}, '${report.ubicacion}', 
@@ -12,15 +11,12 @@ const createReport = async (req, res) => {
 
     try {
         let result = await _pg.executeSql(sql);
-        console.log(result);
-        console.log(sql);
         return res.send({
             ok: result.rowCount == 1,
             message: result == 1 ? "El reporte no fue creado" : "Reporte creado",
             content: {report,id:report.id_usuario},
         });
     } catch (error) {
-        console.log(error);
         return res.send({
             ok: false,
             message: "Error creando el reporte",
@@ -34,10 +30,8 @@ const getReportes = async (req, res) => {
   let sql = `select rutaimagen,descripcion,ubicacion,estado from reportes`;
   try {
       let result = await _pg.executeSql(sql);
-      console.log(result.rows);
       return res.send(result.rows);
   } catch (error) {
-      console.log(error);
       return res.send({ ok: false, message: "Error consultando los usuarios", content: error, });
   }
 };
@@ -53,26 +47,27 @@ const getReport = async (req, res) => {
         let result = await _pg.executeSql(sql);
         return res.send({ ok: true, message: "Reporte consultado", content: result.rows, });
     } catch (error) {
-        console.log(error);
         return res.send({ ok: false, message: "Error consultando el reporte", content: error, });
     }
 };
 
 const saveFiles = async (req, res) => {
     try {
-      console.log(req.params);
+      console.log('SAVEFLES()');
       let id = req.params.id;
-      console.log(id);
+      let files = req.files;
       let image = files.imagen;
-      console.log(image);
-      createFolder(`./docs/${id}/`);
-      saveFile(`./docs/${id}/${image.name}`,image.data);
+      let pathReportes = `./docs/`;
+      createFolder(pathReportes);
+      saveFile(`${pathReportes}${image.name}`, image.data);
+      console.log('SAVEFLES()');
       return res.send({
         ok: true,
         message: "Archivos cargados.",
         content: {},
       });
     } catch (error) {
+      console.log('ERROR SAVEFILES', error);
       return res.status(500).send({
         ok: false,
         message: "Ha ocurrido un error subiendo el archivo",
