@@ -19,8 +19,9 @@ router
     .post('/createReport', _reportesController.createReport)
     .post('/createReport/:id/archivos', _reportesController.saveFiles)
 
-    //Creacion Recolector
+    //Recolector
     .post('/postrecolectores', _recolectoresController.createRecolector)
+    .get('/getrecolectores', _recolectoresController.getRecolectores)
 
     //Creacion archivo
     .use("/public/static", express.static("docs"))
@@ -34,7 +35,6 @@ router
 
     //Recolectores
     .put('/putrecolectores', _recolectoresController.updateRecolector)
-    .get('/getrecolectores', _recolectoresController.getRecolectores)
     .get('/getadministradores', _administradoresController.getAdministradores)
 
     //Administradores
