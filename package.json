@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
+    "express-middleware": "^3.4.2",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.14",
     "pg": "^8.7.1",

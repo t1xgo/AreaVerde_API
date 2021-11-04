@@ -5,7 +5,9 @@ const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const app = express()
 const router = require('./app/routers/index');
+const jwtToken = require('express-middleware').jwtToken;
 
+app.use(jwtToken());
 const port = 3001;
 
 app.use(express.json());
