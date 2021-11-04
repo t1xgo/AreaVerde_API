@@ -24,7 +24,7 @@ const getPersonaLogin = async (req, res) => {
       });
     } else {
       sql = `select nombre,cedula,tipo from personal WHERE usuario='${user.usuario}' 
-      and password = '${user.password}' limit 1`;
+      and password = md5('${user.password}') limit 1`;
       result = await _pg.executeSql(sql);
       user_logged = result.rows[0];
       console.log(user_logged);
@@ -51,7 +51,7 @@ const verifyToken = (req, res) => {
     try {
         let token = req.headers.token;
         let persona = _jwt.verify(token);
-        return res.send({
+        return res.status(200).send({
             ok: true,
             message: "Token verificado",
             content: persona
@@ -60,7 +60,7 @@ const verifyToken = (req, res) => {
         return res.send({
             ok: false,
             message: "El token no se pudo verificar",
-            content: persona
+            content: error
         });
     }
 };
@@ -73,7 +73,8 @@ const verifyTokenMiddleWare = (req, res, next) => {
     } catch (error) {
         return res.send({
             ok: false,
-            message: "El token no se pudo verificar",
+            message: "Middleware - Error verificando el token",
+            content:error,
         });
     }
 }

@@ -20,26 +20,27 @@ router
     .post('/createReport', _reportesController.createReport)
     .post('/createReport/:id/archivos', _reportesController.saveFiles)
 
-    //Creacion Recolector
+    //Recolector
     .post('/postrecolectores', _recolectoresController.createRecolector)
+    .get('/getrecolectores', _recolectoresController.getRecolectores)
 
     //Creacion archivo
     .use("/public/static", express.static("docs"))
 
-//Middleware
-    .use([_authController.verifyTokenMiddleWare])
 //Rutas
-
-    //Verificar Token
-    .get('/verify', _authController.verifyToken)
 
     //Recolectores
     .put('/putrecolectores', _recolectoresController.updateRecolector)
-    .get('/getrecolectores', _recolectoresController.getRecolectores)
     .get('/getadministradores', _administradoresController.getAdministradores)
 
     //Administradores
-    .get('/getadministradores', _administradoresController.getAdministradores);
+    .get('/getadministradores', _administradoresController.getAdministradores)
+
+    //Middleware
+    .use([_authController.verifyTokenMiddleWare])
+
+    //Verificar Token
+    .get('/verify', _authController.verifyToken);
 
 
 module.exports = router;
