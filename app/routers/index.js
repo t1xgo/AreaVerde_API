@@ -12,6 +12,9 @@ router
     .post('/personaCreate', _usuariosController.createPersona)
     .post('/login', _authController.getPersonaLogin)
 
+    //Reports
+    .get('/getReport/:id', _reportesController.getReport)
+
     //Creacion Report
     .post('/createReport', _reportesController.createReport)
     .post('/createReport/:id/archivos', _reportesController.saveFiles)
@@ -33,9 +36,6 @@ router
     .put('/putrecolectores', _recolectoresController.updateRecolector)
     .get('/getrecolectores', _recolectoresController.getRecolectores)
     .get('/getadministradores', _administradoresController.getAdministradores)
-
-    //Reports
-    .get('/getReport/:id', _reportesController.getReport)
 
     //Administradores
     .get('/getadministradores', _administradoresController.getAdministradores);
