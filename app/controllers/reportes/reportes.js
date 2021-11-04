@@ -55,7 +55,7 @@ const getReport = async (req, res) => {
       return res.send({
         ok: true,
         message: "Reportes consultados del usuario",
-        content: rows[0],
+        content: rows,
       });
     } catch (error) {
       return res.send({
