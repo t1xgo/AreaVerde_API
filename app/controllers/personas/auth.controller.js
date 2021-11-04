@@ -24,7 +24,7 @@ const getPersonaLogin = async (req, res) => {
       });
     } else {
       sql = `select nombre,cedula,tipo from personal WHERE usuario='${user.usuario}' 
-      and password = '${user.password}' limit 1`;
+      and password = md5('${user.password}') limit 1`;
       result = await _pg.executeSql(sql);
       user_logged = result.rows[0];
       console.log(user_logged);
