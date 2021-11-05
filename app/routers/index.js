@@ -30,7 +30,6 @@ router
     //Recolector
     .post('/postrecolectores', _recolectoresController.createRecolector)
     .get('/getrecolectores', _recolectoresController.getRecolectores)
-
     //Creacion archivo
     .use("/public/static", express.static("docs"))
 

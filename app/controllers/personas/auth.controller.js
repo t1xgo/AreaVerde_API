@@ -62,6 +62,7 @@ const verifyToken = (req, res) => {
 const verifyTokenMiddleWare = (req, res, next) => {
     try {
         let token = req.headers.token;
+        console.log("estee es el malparido token",token);
         let persona = _jwt.verify(token);
         console.log("token bien verificado")
         next();
