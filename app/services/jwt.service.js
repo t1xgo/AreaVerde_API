@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-const SECRET_KEY = "5IO&!:S1#!w.^hVU;Kt[5m8jy+@sT7;%fW'{*W/}L5CEbk~XgbF4c!es%p-Qy&Y";
+const SECRET_KEY = "O@M{tMCSz6M%e@FD7::FhQ,xY}DJ`:}Aidcf17XCL.2'q<of&h6iM}])4*UCRHM";
 
 const sign = (data) => {
-    return jwt.sign(data, SECRET_KEY, {expiresIn: "900h"});
+    return jwt.sign(data, SECRET_KEY, {expiresIn: '10 days'});
 }
 
 const verify = (token) => {

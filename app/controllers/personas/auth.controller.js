@@ -7,12 +7,8 @@ const getPersonaLogin = async (req, res) => {
     let user = req.body;
     let sql = `select id_usuario,nombre,cedula,correo from usuarios WHERE usuario='${user.usuario}' 
     AND password = md5('${user.password}') limit 1`;
-    console.log(sql);
-    console.log("BODYYYY",req.body);
     let result = await _pg.executeSql(sql);
-    console.log("RESULTTTTTT",result);
     let user_logged = result.rows[0];
-    console.log(user_logged);
     if (user_logged != undefined) {
       let token = user_logged ? _jwt.sign(user_logged) : null;
       return res.send({
@@ -27,7 +23,6 @@ const getPersonaLogin = async (req, res) => {
       and password = md5('${user.password}') limit 1`;
       result = await _pg.executeSql(sql);
       user_logged = result.rows[0];
-      console.log(user_logged);
       let token = user_logged ? _jwt.sign(user_logged) : null;
       return res.send({
         ok: user_logged ? true : false,
@@ -38,7 +33,6 @@ const getPersonaLogin = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
     return res.send({
       ok: false,
       message: "Ha ocurrido un error consultando el usuario.",
@@ -69,8 +63,10 @@ const verifyTokenMiddleWare = (req, res, next) => {
     try {
         let token = req.headers.token;
         let persona = _jwt.verify(token);
+        console.log("token bien verificado")
         next();
     } catch (error) {
+      console.log(error);
         return res.send({
             ok: false,
             message: "Middleware - Error verificando el token",

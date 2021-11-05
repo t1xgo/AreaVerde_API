@@ -2,6 +2,7 @@ const PostgresService = require('../../services/postgres.service');
 const _pg = new PostgresService();
 
 const getRecolectores = async (req, res) => {
+    console.log("GetRecolectores")
     let sql = `select * from personal where tipo = 1`;
     try {
         let result = await _pg.executeSql(sql);

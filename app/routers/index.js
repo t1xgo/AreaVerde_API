@@ -10,7 +10,14 @@ const _reportesController = require('../controllers/reportes/reportes');
 router
     //Login y Registro
     .post('/personaCreate', _usuariosController.createPersona)
-    .post('/login', _authController.getPersonaLogin)
+    .post('/login', _authController.getPersonaLogin);
+
+//REGISTRO DEL MIDDLEWARE
+router.use([_authController.verifyTokenMiddleWare]);
+
+//Verificar Token
+router
+    .get('/verify', _authController.verifyToken)
 
     //Reports
     .get('/getReport/:id', _reportesController.getReport)
@@ -26,7 +33,7 @@ router
     //Creacion archivo
     .use("/public/static", express.static("docs"))
 
-//Rutas
+    //Rutas
 
     //Recolectores
     .put('/putrecolectores', _recolectoresController.updateRecolector)
@@ -34,12 +41,6 @@ router
 
     //Administradores
     .get('/getadministradores', _administradoresController.getAdministradores)
-
-    //Middleware
-    .use([_authController.verifyTokenMiddleWare])
-
-    //Verificar Token
-    .get('/verify', _authController.verifyToken);
 
 
 module.exports = router;
