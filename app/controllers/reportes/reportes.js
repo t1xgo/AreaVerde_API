@@ -52,6 +52,11 @@ const getReport = async (req, res) => {
       let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, estado from reportes where id_usuario = ${id}`;
       let result = await _pg.executeSql(sql);
       let rows = result.rows;
+      rows = rows.map(report =>{
+        let path = `./docs/`;
+        report.rutaimagen = readDirectory(path);
+        return report;
+      });
       return res.send({
         ok: true,
         message: "Reportes consultados del usuario",
