@@ -10,7 +10,11 @@ const _reportesController = require('../controllers/reportes/reportes');
 router
     //Login y Registro
     .post('/personaCreate', _usuariosController.createPersona)
-    .post('/login', _authController.getPersonaLogin);
+    .post('/login', _authController.getPersonaLogin)
+
+    //Creacion Report
+    .post('/createReport', _reportesController.createReport)
+    .post('/createReport/:id/archivos', _reportesController.saveFiles)
 
 //REGISTRO DEL MIDDLEWARE
 router.use([_authController.verifyTokenMiddleWare]);
@@ -22,10 +26,6 @@ router
     //Reports
     .get('/getReport/:id', _reportesController.getReport)
     .use("/public/static", express.static("docs"))
-
-    //Creacion Report
-    .post('/createReport', _reportesController.createReport)
-    .post('/createReport/:id/archivos', _reportesController.saveFiles)
 
     //Recolector
     .post('/postrecolectores', _recolectoresController.createRecolector)
