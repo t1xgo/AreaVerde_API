@@ -2,12 +2,13 @@ const PostgresService = require('../../services/postgres.service');
 const _pg = new PostgresService();
 
 const getRecolectores = async (req, res) => {
-    console.log("GetRecolectores")
-    let sql = `select * from personal where tipo = 1`;
+    let sql = `select personal.cedula, categorias.nombre as categoria, personal.id_personal, personal.nombre recolector 
+    from personal inner join categorias on categorias.id_categoria = personal.id_categoriarecolector 
+    where personal.tipo = 1`;
     try {
         let result = await _pg.executeSql(sql);
         console.log(result);
-        return res.send({ ok: true, message: "Recolectores consultados", content: result.rows});
+        return res.send({ ok: true, message: "Recolectores consultados", content: result.rows });
     } catch (error) {
         console.log(error);
         return res.send({ ok: false, message: "Error consultando los recolectores", content: error, });
@@ -30,20 +31,14 @@ const createRecolector = async (req, res) => {
 
 const updateRecolector = async (req, res) => {
     let recolector = req.body;
-    let sql = `select id_personal from personal where cedula = '${recolector.cedula}'`;
-    let result = await _pg.executeSql(sql);
-    if (result.rowCount != 1) {
-        return res.send("El recolector no existe");
-    } else {
-        let sqlUpdate = `update personal set id_categoriarecolector = ${recolector.id_categoriarecolector} where id_personal = ${result};
+    let sqlUpdate = `update personal set id_categoriarecolector = ${recolector.id_categoriarecolector} where id_personal = ${result};
         `;
-        try {
-            let resultUpdate = await _pg.executeSql(sqlUpdate);
-            return res.send({ ok: true, message: "Recolector actuaizado", content: resultUpdate.rows, });
-        } catch (error) {
-            console.log(error);
-            return res.send({ ok: false, message: "Error actualizando el recolector", content: error, });
-        }
+    try {
+        let resultUpdate = await _pg.executeSql(sqlUpdate);
+        return res.send({ ok: true, message: "Recolector actuaizado", content: resultUpdate.rows, });
+    } catch (error) {
+        console.log(error);
+        return res.send({ ok: false, message: "Error actualizando el recolector", content: error, });
     }
 };
 
