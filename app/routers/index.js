@@ -12,7 +12,7 @@ router
     .post('/personaCreate', _usuariosController.createPersona)
     .post('/login', _authController.getPersonaLogin)
     // IMG REPORTES
-    .use("/public/static", express.static("docs"))
+    .use("/public/static/docs", express.static("docs"))
 
     //AGREGAR ARCHIVOS A UN REPORTE
     .post('/createReport/:id/archivos', _reportesController.saveFiles)

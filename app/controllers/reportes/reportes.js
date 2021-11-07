@@ -25,7 +25,7 @@ const createReport = async (req, res) => {
   }
 };
 
-//Traer TODOS los reportes
+//Traer TODOS los reportes con estado = 0
 const getReportes = async (req, res) => {
   try {
     let user = req.body;
@@ -49,7 +49,7 @@ const getReportes = async (req, res) => {
   }
 };
 
-// Traer los reportes de UN USUARIO
+// Traer los reportes de UN USUARIO logueado
 const getReport = async (req, res) => {
   try {
     let id = req.params.id;
@@ -57,11 +57,6 @@ const getReport = async (req, res) => {
       estado from reportes where id_usuario = ${id}`;
     let result = await _pg.executeSql(sql);
     let rows = result.rows;
-    rows = rows.map((report) => {
-      let path = `./docs/${id}`;
-      report.rutaimagen = readDirectory(path);
-      return report;
-    });
     return res.send({
       ok: true,
       message: "Reportes consultados del usuario",
