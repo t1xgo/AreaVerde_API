@@ -28,7 +28,6 @@ const createReport = async (req, res) => {
 //Traer TODOS los reportes con estado = 0
 const getReportes = async (req, res) => {
   try {
-    let user = req.body;
     let sql = `select id_reporte, rutaimagen, reportes.descripcion as descripcion, ubicacion, estado, categorias.nombre as categoria
       from reportes inner join
       categorias on categorias.id_categoria = reportes.id_categoria where estado = 0`;
