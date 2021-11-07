@@ -60,20 +60,17 @@ const getReportes = async (req, res) => {
   }
 };
 
-// Traer los reportes de un USUARIO
+// Traer los reportes de UN USUARIO
 const getReport = async (req, res) => {
     try {
-      console.log("ver reportes");
       let id = req.params.id;
       let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, 
       estado from reportes where id_usuario = ${id}`;
       let result = await _pg.executeSql(sql);
       let rows = result.rows;
-      rows = rows.map(report =>{
-        let path = `./docs/`;
+      rows = rows.map((report) =>{
+        let path = `./docs/${report.id_usuario}`;
         report.rutaimagen = readDirectory(path);
-        console.log("ESTA ES LA RUTA",report.rutaimagen);
-        console.log(report);
         return report;
       });
       return res.send({

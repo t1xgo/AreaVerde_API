@@ -11,6 +11,7 @@ router
     //Login y Registro
     .post('/personaCreate', _usuariosController.createPersona)
     .post('/login', _authController.getPersonaLogin)
+    // IMG REPORTES
     .use("/public/static", express.static("docs"))
 
     //AGREGAR ARCHIVOS A UN REPORTE
@@ -27,7 +28,7 @@ router
     .get('/verify', _authController.verifyToken)
 
     //Reports
-    .get('/getReport/:id', _reportesController.getReport)
+    .get('/getReports/:id', _reportesController.getReport)
     .get('/getReports', _reportesController.getReportes)
 
     //Recolector
