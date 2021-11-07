@@ -19,6 +19,7 @@ router
     
     //Creacion Report
     .post('/createReport', _reportesController.createReport)
+    .delete('/eliminarReporte/:id', _reportesController.eliminarReporte)
 
 //REGISTRO DEL MIDDLEWARE
 router.use([_authController.verifyTokenMiddleWare]);

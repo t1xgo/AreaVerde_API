@@ -132,4 +132,24 @@ const estadoAprobadoCategoria = async (req, res) => {
   }
 }
 
-module.exports = { createReport, getReportes, getReport, saveFiles, estadoAprobado, estadoAprobadoCategoria };
+
+const eliminarReporte = async (req, res) => {
+  let id = req.params.id;
+  let sql = `delete from reportes where id_reporte = ${id}`;
+  try {
+    await _pg.executeSql(sql);
+    return res.send({
+      ok: true,
+      message: "Reporte eliminado",
+      content: { report },
+    });
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Error eliminando el reporte",
+      content: error,
+    });
+  }
+}
+
+module.exports = { createReport, getReportes, getReport, saveFiles, estadoAprobado, estadoAprobadoCategoria, eliminarReporte };
