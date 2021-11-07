@@ -52,8 +52,9 @@ const getReportes = async (req, res) => {
 const getReport = async (req, res) => {
   try {
     let id = req.params.id;
-    let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, 
-      estado from reportes where id_usuario = ${id}`;
+    let sql = `select reportes.id_reporte, reportes.rutaimagen, reportes.descripcion, reportes.ubicacion, reportes.estado, categorias.nombre as categoria
+    from reportes inner join categorias on reportes.id_categoria = categorias.id_categoria 
+    where id_usuario = ${id}`;
     let result = await _pg.executeSql(sql);
     let rows = result.rows;
     return res.send({
