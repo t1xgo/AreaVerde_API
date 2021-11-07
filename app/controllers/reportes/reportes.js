@@ -9,7 +9,6 @@ const createReport = async (req, res) => {
             estado) values('${report.descripcion}', '${report.id_categoria}', 
             ${report.id_usuario}, '${report.ubicacion}', 
             './docs/${report.id_usuario}/${report.rutaimagen}', '${report.estado}')`;
-
     try {
         let result = await _pg.executeSql(sql);
         return res.send({
@@ -28,14 +27,30 @@ const createReport = async (req, res) => {
 //Traer TODOS los reportes
 const getReportes = async (req, res) => {
   try {
-    let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, estado from reportes`;
-    let result = await _pg.executeSql(sql);
-    let rows = result.rows;
-    return res.send({
-      ok: true,
-      message: "Reportes consultados",
-      content: rows,
-    });
+    let user = req.body;
+    if(user.rol == 0 || user.rol == undefined)
+    {
+      let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, estado from reportes`;
+      let result = await _pg.executeSql(sql);
+      let rows = result.rows;
+      return res.send({
+        ok: true,
+        message: "Reportes consultados",
+        content: rows,
+      });
+    }
+    else
+    {
+      let sql = `select id_reporte, rutaimagen, descripcion, ubicacion,
+       estado from reportes where estado = 1 or estado = 2`;
+      let result = await _pg.executeSql(sql);
+      let rows = result.rows;
+      return res.send({
+        ok: true,
+        message: "Reportes consultados",
+        content: rows,
+      });
+    }
   } catch (error) {
     return res.send({
       ok: false,
@@ -48,13 +63,17 @@ const getReportes = async (req, res) => {
 // Traer los reportes de un USUARIO
 const getReport = async (req, res) => {
     try {
+      console.log("ver reportes");
       let id = req.params.id;
-      let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, estado from reportes where id_usuario = ${id}`;
+      let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, 
+      estado from reportes where id_usuario = ${id}`;
       let result = await _pg.executeSql(sql);
       let rows = result.rows;
       rows = rows.map(report =>{
         let path = `./docs/`;
         report.rutaimagen = readDirectory(path);
+        console.log("ESTA ES LA RUTA",report.rutaimagen);
+        console.log(report);
         return report;
       });
       return res.send({
@@ -77,7 +96,8 @@ const saveFiles = async (req, res) => {
       let id = req.params.id;
       let files = req.files;
       let image = files.imagen;
-      let pathReportes = `./docs/`;
+      let pathReportes = `./docs/${id}/`;
+      console.log(pathReportes);
       createFolder(pathReportes);
       saveFile(`${pathReportes}${image.name}`, image.data);
       console.log('SAVEFLES()');

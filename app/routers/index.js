@@ -11,10 +11,13 @@ router
     //Login y Registro
     .post('/personaCreate', _usuariosController.createPersona)
     .post('/login', _authController.getPersonaLogin)
+    .use("/public/static", express.static("docs"))
 
+    //AGREGAR ARCHIVOS A UN REPORTE
+    .post('/createReport/:id/archivos', _reportesController.saveFiles)
+    
     //Creacion Report
     .post('/createReport', _reportesController.createReport)
-    .post('/createReport/:id/archivos', _reportesController.saveFiles)
 
 //REGISTRO DEL MIDDLEWARE
 router.use([_authController.verifyTokenMiddleWare]);
@@ -25,19 +28,14 @@ router
 
     //Reports
     .get('/getReport/:id', _reportesController.getReport)
-    .use("/public/static", express.static("docs"))
+    .get('/getReports', _reportesController.getReportes)
 
     //Recolector
     .post('/postrecolectores', _recolectoresController.createRecolector)
     .get('/getrecolectores', _recolectoresController.getRecolectores)
-    //Creacion archivo
-    .use("/public/static", express.static("docs"))
-
-    //Rutas
 
     //Recolectores
     .put('/putrecolectores', _recolectoresController.updateRecolector)
-    .get('/getadministradores', _administradoresController.getAdministradores)
 
     //Administradores
     .get('/getadministradores', _administradoresController.getAdministradores)
