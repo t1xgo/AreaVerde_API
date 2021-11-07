@@ -12,7 +12,7 @@ router
     .post('/personaCreate', _usuariosController.createPersona)
     .post('/login', _authController.getPersonaLogin)
 
-    //Creacion Report
+    //Creacion Reports
     .post('/createReport', _reportesController.createReport)
     .post('/createReport/:id/archivos', _reportesController.saveFiles)
 
