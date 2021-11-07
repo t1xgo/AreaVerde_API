@@ -73,15 +73,12 @@ const getReport = async (req, res) => {
 //Guardar imagenes de reportes
 const saveFiles = async (req, res) => {
   try {
-    console.log('SAVEFLES()');
     let id = req.params.id;
     let files = req.files;
     let image = files.imagen;
     let pathReportes = `./docs/${id}/`;
-    console.log(pathReportes);
     createFolder(pathReportes);
     saveFile(`${pathReportes}${image.name}`, image.data);
-    console.log('SAVEFLES()');
     return res.send({
       ok: true,
       message: "Archivos cargados.",
@@ -97,4 +94,42 @@ const saveFiles = async (req, res) => {
   }
 };
 
-module.exports = { createReport, getReportes, getReport, saveFiles };
+const estadoAprobado = async (req, res) => {
+  let report = req.body;
+  let sql = `update reportes set estado = 1 where id_reporte = ${report.id_reporte}`;
+  try {
+    let result = await _pg.executeSql(sql);
+    return res.send({
+      ok: result.rowCount == 1,
+      message: result == 1 ? "El reporte no fue actualizado" : "Reporte actualizado",
+      content: { report },
+    });
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Error actualizando el reporte",
+      content: error,
+    });
+  }
+}
+
+const estadoAprobadoCategoria = async (req, res) => {
+  let report = req.body;
+  let sql = `update reportes set estado = 1, id_categoria = ${report.id_categoria} where id_reporte = ${report.id_reporte}`;
+  try {
+    let result = await _pg.executeSql(sql);
+    return res.send({
+      ok: result.rowCount == 1,
+      message: result == 1 ? "El reporte no fue actualizado" : "Reporte actualizado",
+      content: { report },
+    });
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Error actualizando el reporte",
+      content: error,
+    });
+  }
+}
+
+module.exports = { createReport, getReportes, getReport, saveFiles, estadoAprobado, estadoAprobadoCategoria };
