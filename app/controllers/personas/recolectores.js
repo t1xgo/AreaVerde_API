@@ -7,7 +7,6 @@ const getRecolectores = async (req, res) => {
     where personal.tipo = 1`;
     try {
         let result = await _pg.executeSql(sql);
-        console.log(result);
         return res.send({ ok: true, message: "Recolectores consultados", content: result.rows });
     } catch (error) {
         console.log(error);
@@ -31,7 +30,7 @@ const createRecolector = async (req, res) => {
 
 const updateRecolector = async (req, res) => {
     let recolector = req.body;
-    let sqlUpdate = `update personal set id_categoriarecolector = ${recolector.id_categoriarecolector} where id_personal = ${result};
+    let sqlUpdate = `update personal set id_categoriarecolector = ${recolector.id_categoriarecolector} where id_personal = ${recolector.id_personal};
         `;
     try {
         let resultUpdate = await _pg.executeSql(sqlUpdate);

@@ -2,7 +2,7 @@ const pg = require("pg");
 
 class PostgresService {
     constructor() {
-        this.connectionString = 'postgresql://postgres:postgres@localhost:5432/areaVerde'
+        this.connectionString = 'postgresql://postgres:Aleja-123@localhost:5432/areaVerde'
         this.pool = new pg.Pool(
             { connectionString: this.connectionString }
         );
