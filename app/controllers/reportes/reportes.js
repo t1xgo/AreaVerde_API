@@ -24,13 +24,14 @@ const createReport = async (req, res) => {
         });
     }
 };
-//Traer TODOS los reportes
+
+//Traer TODOS los reportes para admin y user
 const getReportes = async (req, res) => {
   try {
-    let user = req.body;
-    if(user.rol == 0 || user.rol == undefined)
-    {
-      let sql = `select id_reporte, rutaimagen, descripcion, ubicacion, estado from reportes`;
+    
+      let sql = `select id_categoria, rutaimagen, descripcion, 
+      ubicacion,id_usuario, estado from reportes`;
+      console.log(sql);
       let result = await _pg.executeSql(sql);
       let rows = result.rows;
       return res.send({
@@ -38,19 +39,6 @@ const getReportes = async (req, res) => {
         message: "Reportes consultados",
         content: rows,
       });
-    }
-    else
-    {
-      let sql = `select id_reporte, rutaimagen, descripcion, ubicacion,
-       estado from reportes where estado = 1 or estado = 2`;
-      let result = await _pg.executeSql(sql);
-      let rows = result.rows;
-      return res.send({
-        ok: true,
-        message: "Reportes consultados",
-        content: rows,
-      });
-    }
   } catch (error) {
     return res.send({
       ok: false,
@@ -96,7 +84,7 @@ const saveFiles = async (req, res) => {
       let id = req.params.id;
       let files = req.files;
       let image = files.imagen;
-      let pathReportes = `./docs/${id}/`;
+      let pathReportes = `/docs/${id}/`;
       console.log(pathReportes);
       createFolder(pathReportes);
       saveFile(`${pathReportes}${image.name}`, image.data);
