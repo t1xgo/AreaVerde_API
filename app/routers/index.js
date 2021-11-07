@@ -32,6 +32,7 @@ router
     .get('/getReports', _reportesController.getReportes)
     .put('/estadoAprobado', _reportesController.estadoAprobado)
     .put('/estadoAprobadoCategoria', _reportesController.estadoAprobadoCategoria)
+    
     //Recolector
     .post('/postrecolectores', _recolectoresController.createRecolector)
     .get('/getrecolectores', _recolectoresController.getRecolectores)
