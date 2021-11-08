@@ -155,7 +155,6 @@ const eliminarReporte = async (req, res) => {
 const estadisticasAdministrador = async (req, res) => {
   let estado = req.params.estado;
   let categoria = req.params.categoria;
-  console.log(estado, categoria)
   let sql = `select count(*) from reportes where estado = ${estado} and id_categoria = ${categoria}`
   try {
     let result = await _pg.executeSql(sql);
