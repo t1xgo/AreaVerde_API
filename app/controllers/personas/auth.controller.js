@@ -19,7 +19,7 @@ const getPersonaLogin = async (req, res) => {
         content: { token, name: user_logged.nombre, rol: user_logged.tipo, id:user_logged.id_usuario },
       });
     } else {
-      sql = `select nombre,cedula,tipo from personal WHERE usuario='${user.usuario}' 
+      sql = `select id_personal,nombre,cedula,tipo from personal WHERE usuario='${user.usuario}' 
       and password = md5('${user.password}') limit 1`;
       result = await _pg.executeSql(sql);
       user_logged = result.rows[0];
@@ -29,7 +29,7 @@ const getPersonaLogin = async (req, res) => {
         message: user_logged
           ? `Bienvenido recolector ${user_logged.nombre}`
           : "Usuario no encontrado, verificar identificación y/o contraseña.",
-        content: { token, name: user_logged.nombre, rol: user_logged.tipo, id:user_logged.id_usuario},
+        content: { token, name: user_logged.nombre, rol: user_logged.tipo, id:user_logged.id_personal},
       });
     }
   } catch (error) {

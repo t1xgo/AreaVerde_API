@@ -24,6 +24,65 @@ const createReport = async (req, res) => {
     });
   }
 };
+//Traer TODOS los reportes con estado = 2, filtrando tipo recolector
+const getReportesRecogidos = async (req, res) => {
+  try {
+    let id = req.params.id;
+    let sql = `select id_reporte, rutaimagen, descripcion, ubicacion ,estado,id_categoria 
+               from reportes where id_categoria = (select id_categoria from personal 
+               where id_personal = ${id}) and estado = 2`;
+    let result = await _pg.executeSql(sql);
+    if (result != undefined) {
+      let rows = result.rows;
+      return res.send({
+        ok: true,
+        message: "Reportes consultados",
+        content: rows,
+      });
+    }
+    else {
+      let sql = `select id_reporte, rutaimagen, descripcion, ubicacion ,estado,id_categoria 
+                 from reportes where estado = 1`;
+      let result = await _pg.executeSql(sql);
+      let rows = result.rows;
+      return res.send({
+        ok: true,
+        message: "Reportes consultados",
+        content: rows,
+      });
+    }
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Ha ocurrido un error consultando los reportes",
+      content: error,
+    });
+  }
+};
+
+//Traer TODOS los reportes con estado = 1
+const getReportesPendientes = async (req, res) => {
+  try {
+    let id = req.params.id;
+    let sql = `select id_reporte, rutaimagen, descripcion, ubicacion ,estado,id_categoria 
+      from reportes where id_categoria = (select id_categoria from personal 
+        where id_personal = ${id}) and estado = 1`;
+    let result = await _pg.executeSql(sql);
+    let rows = result.rows;
+    return res.send({
+      ok: true,
+      message: "Reportes consultados",
+      content: rows,
+    });
+
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Ha ocurrido un error consultando los reportes",
+      content: error,
+    });
+  }
+};
 
 //Traer TODOS los reportes con estado = 0
 const getReportes = async (req, res) => {
@@ -94,6 +153,25 @@ const saveFiles = async (req, res) => {
   }
 };
 
+const CambiarEstado = async (req, res) => {
+  let report = req.body;
+  let sql = `update reportes set estado = 2 where id_reporte = ${report.id_reporte}`;
+  try {
+    let result = await _pg.executeSql(sql);
+    return res.send({
+      ok: result.rowCount == 1,
+      message: result == 1 ? "El reporte no fue actualizado" : "Reporte actualizado",
+      content: { report },
+    });
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Error actualizando el reporte",
+      content: error,
+    });
+  }
+}
+
 const estadoAprobado = async (req, res) => {
   let report = req.body;
   let sql = `update reportes set estado = 1 where id_reporte = ${report.id_reporte}`;
@@ -111,7 +189,7 @@ const estadoAprobado = async (req, res) => {
       content: error,
     });
   }
-}
+};
 
 const estadoAprobadoCategoria = async (req, res) => {
   let report = req.body;
@@ -152,4 +230,8 @@ const eliminarReporte = async (req, res) => {
   }
 }
 
-module.exports = { createReport, getReportes, getReport, saveFiles, estadoAprobado, estadoAprobadoCategoria, eliminarReporte };
+module.exports = {
+  createReport, getReportes, getReport, saveFiles,
+  estadoAprobado, estadoAprobadoCategoria, eliminarReporte,
+  getReportesPendientes, getReportesRecogidos, CambiarEstado
+};

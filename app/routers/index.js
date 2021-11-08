@@ -30,7 +30,10 @@ router
 
     //Reports
     .get('/getReports/:id', _reportesController.getReport)
+    .get('/getReportsRecogidos/:id', _reportesController.getReportesRecogidos)
+    .get('/getReportsPendientes/:id', _reportesController.getReportesPendientes)
     .get('/getReports', _reportesController.getReportes)
+    .put('/cambiarEstado', _reportesController.CambiarEstado)
     .put('/estadoAprobado', _reportesController.estadoAprobado)
     .put('/estadoAprobadoCategoria', _reportesController.estadoAprobadoCategoria)
     
