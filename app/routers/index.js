@@ -44,5 +44,7 @@ router
     //Administradores
     .get('/getadministradores', _administradoresController.getAdministradores)
 
+    //Estadisticas
+    .get('/estadisticasAdministrador/:estado/:categoria', _reportesController.estadisticasAdministrador)
 
 module.exports = router;
