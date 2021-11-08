@@ -46,5 +46,8 @@ router
 
     //Estadisticas
     .get('/estadisticasAdministrador/:estado/:categoria', _reportesController.estadisticasAdministrador)
+    .get('/totalreportesCategoria/:categoria', _reportesController.totalreportesCategoria)
+    .get('/porcentajeCategoria/:categoria', _reportesController.getporcentajeRecogidos)
+    .get('/totalreportes', _reportesController.totalreportes)
 
 module.exports = router;

@@ -173,4 +173,61 @@ const estadisticasAdministrador = async (req, res) => {
   }
 }
 
-module.exports = { createReport, getReportes, getReport, saveFiles, estadoAprobado, estadoAprobadoCategoria, eliminarReporte, estadisticasAdministrador };
+const totalreportes = async (req, res) => {
+  let sql = `select count(*) from reportes`
+  try {
+    let result = await _pg.executeSql(sql);
+    return res.send({
+      ok: true,
+      message: "Estadisticas consultadas",
+      content: result,
+    });
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Ha ocurrido un error consultando las estadisticas",
+      content: error,
+    });
+  }
+}
+
+const totalreportesCategoria = async (req, res) => {
+  let categoria = req.params.categoria;
+  let sql = `select count(*) from reportes where id_categoria = ${categoria}`
+  try {
+    let result = await _pg.executeSql(sql);
+    return res.send({
+      ok: true,
+      message: "Estadisticas consultadas",
+      content: result,
+    });
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Ha ocurrido un error consultando las estadisticas",
+      content: error,
+    });
+  }
+}
+
+const getporcentajeRecogidos = async (req, res) => {
+  let categoria = req.params.categoria;
+  let sql = `select count(*) from reportes where id_categoria = ${categoria} and estado = 2`
+  try {
+    let result = await _pg.executeSql(sql);
+    return res.send({
+      ok: true,
+      message: "Estadisticas consultadas",
+      content: result,
+    });
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Ha ocurrido un error consultando las estadisticas",
+      content: error,
+    });
+  }
+}
+
+module.exports = { createReport, getReportes, getReport, saveFiles, estadoAprobado, estadoAprobadoCategoria, 
+  eliminarReporte, estadisticasAdministrador, totalreportes, totalreportesCategoria, getporcentajeRecogidos };
