@@ -30,13 +30,13 @@ const getReportesRecogidos = async (req, res) => {
     let id = req.params.id;
     let sql_categoria = `select id_categoriarecolector from personal where id_personal = ${id}`
     let resultCategoria = await _pg.executeSql(sql_categoria);
+    if (resultCategoria != undefined) {
     let categoria = resultCategoria.rows[0];
     let sql = `select id_reporte, rutaimagen, reportes.descripcion, ubicacion,
                 estado,categorias.descripcion as categoria from reportes inner join categorias 
                 on reportes.id_categoria = categorias.id_categoria 
                 where reportes.id_categoria = ${categoria.id_categoriarecolector} and estado = 2`;
     let result = await _pg.executeSql(sql);
-    if (result != undefined) {
       let rows = result.rows;
       return res.send({
         ok: true,
@@ -49,6 +49,7 @@ const getReportesRecogidos = async (req, res) => {
                   categorias.descripcion as categoria from reportes inner join categorias 
                   on reportes.id_categoria = categorias.id_categoria 
                   where estado = 2`;
+      console.log(sql);
       let result = await _pg.executeSql(sql);
       let rows = result.rows;
       return res.send({
