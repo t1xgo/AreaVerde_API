@@ -17,9 +17,10 @@ const createPersona = async (req, res) => {
                  celular) VALUES('${persona.nombre}', '${persona.cedula}', '${persona.correo}', 
                   '${persona.usuario}', md5('${persona.password}'), '${persona.fechanacimiento}','${persona.celular}')`;
             let result = await _pg.executeSql(sql);
-            let sqlId = `select correo from usuarios where correo = '${persona.correo}'`
+            let sqlId = `select id_usuario from usuarios where correo = '${persona.correo}'`
             let resultID = await _pg.executeSql(sqlId);
             let rowsResult = resultID.rows[0];
+            console.log(rowsResult);
             return res.send({ ok: result.rowCount == 1, message: result == 1 ?
                  "El usuario no fue creado" : "Usuario creado", content: {persona,id:rowsResult.id_usuario} });
         }

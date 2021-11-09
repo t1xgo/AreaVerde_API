@@ -96,9 +96,13 @@ const getReportesRecogidos = async (req, res) => {
 const getReportesPendientes = async (req, res) => {
   try {
     let id = req.params.id;
-    let sql = `select id_reporte, rutaimagen, descripcion, ubicacion ,estado,id_categoria 
-      from reportes where id_categoria = (select id_categoria from personal 
-        where id_personal = ${id}) and estado = 1`;
+    let sql_categoria = `select id_categoriarecolector from personal where id_personal = ${id}`
+    let resultCategoria = await _pg.executeSql(sql_categoria);
+    let categoria = resultCategoria.rows[0];
+    let sql = `select id_reporte, rutaimagen, reportes.descripcion, ubicacion,
+                estado,categorias.descripcion as categoria from reportes inner join categorias 
+                on reportes.id_categoria = categorias.id_categoria 
+                where reportes.id_categoria = ${categoria.id_categoriarecolector} and estado = 1`;
     let result = await _pg.executeSql(sql);
     let rows = result.rows;
     return res.send({
