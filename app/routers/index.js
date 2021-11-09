@@ -21,6 +21,11 @@ router
     .post('/createReport', _reportesController.createReport)
     .delete('/eliminarReporte/:id', _reportesController.eliminarReporte)
 
+    //Feed
+    .get('/porcentajeCategoria/:categoria', _reportesController.getporcentajeRecogidos)
+    .get('/totalreportesCategoria/:categoria', _reportesController.totalreportesCategoria)
+    .get('/totalreportes', _reportesController.totalreportes)
+
 //REGISTRO DEL MIDDLEWARE
 router.use([_authController.verifyTokenMiddleWare]);
 
@@ -49,8 +54,5 @@ router
 
     //Estadisticas
     .get('/estadisticasAdministrador/:estado/:categoria', _reportesController.estadisticasAdministrador)
-    .get('/totalreportesCategoria/:categoria', _reportesController.totalreportesCategoria)
-    .get('/porcentajeCategoria/:categoria', _reportesController.getporcentajeRecogidos)
-    .get('/totalreportes', _reportesController.totalreportes)
 
 module.exports = router;

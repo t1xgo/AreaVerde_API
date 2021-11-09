@@ -277,7 +277,7 @@ const totalreportes = async (req, res) => {
 
 const totalreportesCategoria = async (req, res) => {
   let categoria = req.params.categoria;
-  let sql = `select count(*) from reportes where id_categoria = ${categoria}`
+  let sql = `select count(*) from reportes where id_categoria = ${categoria};`
   try {
     let result = await _pg.executeSql(sql);
     return res.send({
