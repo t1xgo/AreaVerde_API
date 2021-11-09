@@ -23,6 +23,7 @@ router
 
     //Feed
     .get('/porcentajeCategoria/:categoria', _reportesController.getporcentajeRecogidos)
+    .get('/getReportsRecogidos', _reportesController.getReportesRecogidosFeed)
     .get('/totalreportesCategoria/:categoria', _reportesController.totalreportesCategoria)
     .get('/totalreportes', _reportesController.totalreportes)
 

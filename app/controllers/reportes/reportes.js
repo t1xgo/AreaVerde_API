@@ -24,6 +24,31 @@ const createReport = async (req, res) => {
     });
   }
 };
+
+//Traer TODOS los reportes con estado = 2
+const getReportesRecogidosFeed = async (req, res) => {
+  try {
+    let sql = ` select id_reporte, rutaimagen, reportes.descripcion, ubicacion ,estado,
+                  categorias.descripcion as categoria from reportes inner join categorias 
+                  on reportes.id_categoria = categorias.id_categoria 
+                  where estado = 2`;
+      console.log(sql);
+      let result = await _pg.executeSql(sql);
+      let rows = result.rows;
+      return res.send({
+        ok: true,
+        message: "Reportes consultados",
+        content: rows,
+      });
+  } catch (error) {
+    return res.send({
+      ok: false,
+      message: "Ha ocurrido un error consultando los reportes",
+      content: error,
+    });
+  }
+};
+
 //Traer TODOS los reportes con estado = 2, filtrando tipo recolector
 const getReportesRecogidos = async (req, res) => {
   try {
@@ -318,7 +343,7 @@ const getporcentajeRecogidos = async (req, res) => {
   module.exports = {
     createReport, getReportes, getReport, saveFiles,
     estadoAprobado, estadoAprobadoCategoria, eliminarReporte,
-    getReportesPendientes, getReportesRecogidos, CambiarEstado,
+    getReportesPendientes,getReportesRecogidosFeed, getReportesRecogidos, CambiarEstado,
     totalreportes, totalreportesCategoria, getporcentajeRecogidos,
     estadisticasAdministrador
   };
